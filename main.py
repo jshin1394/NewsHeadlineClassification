@@ -40,7 +40,7 @@ args = parser.parse_args()
 data_process = pre_processing.Preprocessing()
 if not os.path.exists('lemmatized.txt'):
 	data_process.lemmatize()
-if not os.path.exists('feature_json_multi'):
+if not os.path.exists('../feature_json_multi'):
 	data_process.process_data(process=True)
 
 #Loading Data
@@ -59,7 +59,7 @@ if not os.path.exists('model.pt'):
 	data_vector = []
 	for i in range(0, 8, 2):
 		for j in range(1, 21):
-			data_json = json.load(open('feature_json_multi/feature_vector' +str(i*10000 + j) +'.json'), object_pairs_hook=OrderedDict)
+			data_json = json.load(open('../feature_json_multi/feature_vector' +str(i*10000 + j) +'.json'), object_pairs_hook=OrderedDict)
 			data_vector += data_json.values()
 	print("Completely loaded data")
 
@@ -90,7 +90,7 @@ else:
 	model.load_state_dict(torch.load('model.pt'))
 	test_vector = []
 	for i in range(1, 6):
-		test_json = json.load(open('feature_json_multi/feature_vector' +str(i) +'.json'), object_pairs_hook=OrderedDict)
+		test_json = json.load(open('../feature_json_multi/feature_vector' +str(i) +'.json'), object_pairs_hook=OrderedDict)
 		test_vector += test_json.values()
 	test_data = np.asarray(test_vector).astype(float)
 	test_label = np.asarray(true_labels[:5000]).astype(float)
